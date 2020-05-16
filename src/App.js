@@ -63,6 +63,24 @@ const App = () => {
     }
   }
 
+  const addLike = async (id, blogObj) => {
+    try {
+      const blog = await blogService.update(id, blogObj)
+      setBlogs(blogs.map((b) => (b.id === id ? blog : b)))
+      setErrorFlag(false)
+      setErrorMessage(`Liked ${blog.title}`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    } catch (error) {
+      setErrorFlag(true)
+      setErrorMessage(error.message)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
   const loginForm = () => {
     return (
       <div>
@@ -118,7 +136,7 @@ const App = () => {
           </Toggleable>
 
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} likeBlog={addLike} />
           ))}
         </div>
       )}
