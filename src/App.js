@@ -59,7 +59,30 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
     } catch (err) {
-      console.log(err)
+      setErrorFlag(true)
+      setErrorMessage(err.message)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const deleteBlog = async (id) => {
+    try {
+      await blogService.deleteBlog(id)
+      const blogs = await blogService.getAll()
+      setBlogs(blogs)
+      setErrorFlag(false)
+      setErrorMessage('Successfully removed blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    } catch (err) {
+      setErrorFlag(true)
+      setErrorMessage(err.message)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -136,7 +159,12 @@ const App = () => {
           </Toggleable>
 
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} likeBlog={addLike} />
+            <Blog
+              key={blog.id}
+              blog={blog}
+              likeBlog={addLike}
+              deleteBlog={deleteBlog}
+            />
           ))}
         </div>
       )}

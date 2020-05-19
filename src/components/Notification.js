@@ -21,7 +21,7 @@ const Notification = ({ message, errFlag }) => {
     marginBottom: '10px',
   }
 
-  if (message == null) {
+  if (message === null) {
     return null
   }
 
