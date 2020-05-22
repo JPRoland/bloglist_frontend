@@ -25,7 +25,11 @@ const Notification = ({ message, errFlag }) => {
     return null
   }
 
-  return <div style={errFlag ? errorStyle : successStyle}>{message}</div>
+  return (
+    <div className="error" style={errFlag ? errorStyle : successStyle}>
+      {message}
+    </div>
+  )
 }
 
 export default Notification
